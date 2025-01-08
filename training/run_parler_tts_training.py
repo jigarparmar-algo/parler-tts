@@ -94,7 +94,7 @@ def main():
         mixed_precision = "bf16"
         torch_dtype = torch.bfloat16
     else:
-        mixed_precision = "no"
+        mixed_precision = "fp16"
         torch_dtype = torch.float32
 
     if data_args.pad_to_max_length and (
@@ -337,6 +337,7 @@ def main():
         token=data_args.token,
         trust_remote_code=data_args.trust_remote_code,
         attn_implementation={"decoder": model_args.attn_implementation, "text_encoder": "eager"},
+        torch_dtype=torch_dtype # Ensure float32 is used
     )
 
     # enable gradient checkpointing if necessary
